@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TopTridenti #1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Sfondo animato con i colori del titolo */
+        body {
+            font-family: 'Lato', Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+            position: relative;
+            background-color: #f4f4f4;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -20%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: linear-gradient(135deg, #4A90E2, #3E7CB1, #6DB9F2, #50A0E0, #4A90E2, #3E7CB1);
+            background-size: 400% 400%;
+            animation: moveGradient 15s ease infinite;
+            filter: blur(50px);
+            z-index: -1;
+        }
+
+        @keyframes moveGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Stili per il contenuto principale */
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin-top: 10px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        
+        .logo-container img {
+            width: 150px;
+            height: auto;
+        }
+
+        .title-container {
+            text-align: center;
+        }
+
+        .title-container h1 {
+            font-size: 3em;
+            margin-top: 0;
+            margin-bottom: 0.2em;
+            background: linear-gradient(135deg, #4A90E2, #3E7CB1, #6DB9F2, #50A0E0, #4A90E2, #3E7CB1);
+            background-size: 400% 400%;
+            animation: textGradient 15s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #d32f2f; /* Fallback color */
+        }
+        
+        @keyframes textGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: 0;
+            margin-bottom: 2em;
+        }
+
+        h2 {
+            color: #0056b3;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 5px;
+            margin-top: 40px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            justify-content: center; /* Aggiunto per centrare i menu a tendina */
+        }
+        
+        .input-group {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Lato', Arial, sans-serif;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 1em;
+            transition: all 0.3s ease; /* Aggiunta animazione */
+        }
+
+        .input-group select:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Animazione hover */
+        }
+        
+        .input-group select:focus {
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Effetto "glow" */
+            outline: none; /* Rimuove il bordo di default */
+            transform: translateY(-2px); /* Leggero sollevamento */
+        }
+        
+        /* Stile per le immagini dei giocatori */
+        .player-image {
+            width: 100%;
+            max-width: 150px;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: opacity 0.5s ease;
+            display: none; /* Inizialmente nascosto */
+        }
+        .player-image.visible {
+            display: block; /* Mostra l'immagine */
+            opacity: 1;
+        }
+
+        .main-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 15px;
+            transition: all 0.3s ease; /* Aggiunta animazione */
+            font-family: 'Lato', Arial, sans-serif;
+            
+            /* Stili per il pulsante animato */
+            background: linear-gradient(135deg, #d32f2f, #b71c1c, #d32f2f, #a11515);
+            background-size: 400% 400%;
+            animation: buttonGradient 15s ease infinite;
+            text-transform: uppercase;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .main-button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px); /* Animazione hover */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+        }
+        
+        @keyframes buttonGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #risultati {
+            margin-top: 50px;
+            padding: 0px;
+            border-radius: 4px;
+            opacity: 0; /* Nasconde inizialmente */
+            animation: fadeIn 0.5s forwards; /* Animazione di apparizione */
+            animation-delay: 0.1s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #risultati h4 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .affidabilita-globale {
+            padding: 0;
+            border: none;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .affidabilita-globale h5 {
+            font-size: 1.2em;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .affidabilita-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        
+        .progress-bar-line {
+            height: 40px;
+            width: 80%;
+            background-color: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Animazione più smooth */
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .progress-bar-text {
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+        }
+
+        .high-reliability { background-color: #4CAF50; }
+        .medium-reliability { background-color: #FFC107; }
+        .low-reliability { background-color: #F44336; }
+        .negative-score { background-color: #757575; }
+
+        .risultato-giornata {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .risultato-giornata:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .toggle-buttons-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .toggle-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            display: block;
+            transition: all 0.3s ease; /* Aggiunta animazione */
+            font-family: 'Lato', Arial, sans-serif;
+            font-size: 1em;
+        }
+
+        .toggle-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        #dettaglio-giornate, #dettaglio-giornate-tridente {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: rgba(249, 249, 249, 0.9);
+            margin-top: 10px;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+            animation-delay: 0.2s;
+        }
+
+        .sempre-aperto-container {
+            border: none;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .sempre-aperto-container h2 {
+            margin-top: 0;
+            padding-top: 0;
+            text-align: center;
+            font-size: 2em;
+            color: #d32f2f;
+            border-bottom: none;
+        }
+
+        .tridente-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .tridente-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .tridente-info {
+            display: flex;
+            flex-direction: column;
+            width: 60%;
+            font-size: 1.1em;
+        }
+
+        .tridente-info span {
+            font-weight: bold;
+        }
+
+        /* Stile per la percentuale nella lista dei tridenti */
+        .tridente-info .affidabilita-percentuale {
+            font-size: 1.1em;
+            font-weight: bold;
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+            text-align: center;
+            min-width: 80px; /* Assicura che il blocco abbia una dimensione minima */
+            margin-top: 5px;
+        }
+
+        .tridente-item .low-reliability { background-color: #F44336; }
+        .tridente-item .medium-reliability { background-color: #FFC107; }
+        .tridente-item .high-reliability { background-color: #4CAF50; }
+        
+        .tridente-item select {
+            width: 35%;
+            font-family: 'Lato', Arial, sans-serif;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .tridente-item select:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        /* Stili per la difficoltà */
+        .difficile {
+            color: red;
+            font-weight: bold;
+        }
+        .media {
+            color: orange;
+            font-weight: bold;
+        }
+        .facile {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo-container">
+        </div>
+        <div class="title-container">
+            <h1>TopTridenti #1</h1>
+        </div>
+        <p>Scegli il tuo attacco, noi ti mostriamo il cammino.</p>
+
+        <div class="input-row">
+            <div class="input-group">
+                <label for="attaccante1">Attaccante 1:</label>
+                <select id="attaccante1" onchange="mostraImmagine('attaccante1')">
+                    <option value="" selected disabled>Seleziona un giocatore</option>
+                </select>
+                <img id="img-attaccante1" class="player-image" src="" alt="Foto Attaccante 1">
+            </div>
+            <div class="input-group">
+                <label for="attaccante2">Attaccante 2:</label>
+                <select id="attaccante2" onchange="mostraImmagine('attaccante2')">
+                    <option value="" selected disabled>Seleziona un giocatore</option>
+                </select>
+                <img id="img-attaccante2" class="player-image" src="" alt="Foto Attaccante 2">
+            </div>
+            <div class="input-group">
+                <label for="attaccante3">Attaccante 3:</label>
+                <select id="attaccante3" onchange="mostraImmagine('attaccante3')">
+                    <option value="" selected disabled>Seleziona un giocatore</option>
+                </select>
+                <img id="img-attaccante3" class="player-image" src="" alt="Foto Attaccante 3">
+            </div>
+        </div>
+
+        <button class="main-button" onclick="analizzaCalendario()">Analizza calendario</button>
+        
+        <div id="risultati">
+            <div class="affidabilita-globale">
+                <h5>Affidabilità complessiva del tuo attacco</h5>
+                <div class="affidabilita-container">
+                    <div class="progress-bar-line">
+                        <div class="progress-bar high-reliability" style="width: 0%">
+                            <span class="progress-bar-text"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="toggle-buttons-container">
+                <button class="toggle-button" onclick="mostraDettaglioGiornate('solo_difficili_e_media')">Mostra solo partite difficili e medie</button>
+                <button class="toggle-button" onclick="mostraDettaglioGiornate('dettaglio_completo')">Mostra dettaglio completo</button>
+            </div>
+            <div id="dettaglio-giornate" style="display: none;">
+            </div>
+        </div>
+    </div>
+
+    <div class="sempre-aperto-container">
+        <h2>Tridenti più Affidabili</h2>
+        <p>Ecco i trii d'attacco con il calendario più favorevole, calcolati automaticamente. Seleziona una combinazione di giocatori per visualizzare i dettagli.</p>
+        
+        <div id="top-tridenti-list">
+        </div>
+        
+        <div id="risultati-tridente">
+        </div>
+    </div>
+
+    <script>
+        const difficoltaSquadre = {
+            "difficile": ["Juventus", "Roma", "Inter", "Napoli", "Milan", "Atalanta", "Lazio", "Fiorentina"],
+            "media": ["Bologna", "Torino", "Sassuolo", "Genoa"],
+            "facile": ["Cagliari", "Como", "Cremonese", "Hellas Verona", "Lecce", "Parma", "Pisa", "Udinese"]
+        };
+
+        const listaAttaccanti = [
+            {nome: "Martínez L.", squadra: "Inter", importanza: 1},
+            {nome: "Thuram", squadra: "Inter", importanza: 2},
+            {nome: "Lukaku", squadra: "Napoli", importanza: 1},
+            {nome: "Raspadori", squadra: "Napoli", importanza: 2},
+            {nome: "Lucca", squadra: "Napoli", importanza: 2},
+            {nome: "Vlahović", squadra: "Juventus", importanza: 1},
+            {nome: "David", squadra: "Juventus", importanza: 1},
+            {nome: "Kolo Muani", squadra: "Juventus", importanza: 1},
+            {nome: "Leão", squadra: "Milan", importanza: 3},
+            {nome: "Pulisic", squadra: "Milan", importanza: 2},
+            {nome: "Dovbyk", squadra: "Roma", importanza: 1},
+            {nome: "Dybala", squadra: "Roma", importanza: 2},
+            {nome: "Soule’", squadra: "Roma", importanza: 3},
+            {nome: "Kean", squadra: "Fiorentina", importanza: 1},
+            {nome: "Beltrán", squadra: "Fiorentina", importanza: 4},
+            {nome: "Guðmundsson", squadra: "Fiorentina", importanza: 2},
+            {nome: "Scamacca", squadra: "Atalanta", importanza: 1},
+            {nome: "De Ketelaere", squadra: "Atalanta", importanza: 2},
+            {nome: "Castellanos", squadra: "Lazio", importanza: 1},
+            {nome: "Immobile", squadra: "Lazio", importanza: 1},
+            {nome: "Piccoli", squadra: "Cagliari", importanza: 2},
+            {nome: "Luvumbo", squadra: "Cagliari", importanza: 1},
+            {nome: "Sarr", squadra: "Hellas Verona", importanza: 2},
+            {nome: "Mosquera", squadra: "Hellas Verona", importanza: 1},
+            {nome: "Brenner", squadra: "Udinese", importanza: 1},
+            {nome: "Bravo", squadra: "Udinese", importanza: 2},
+            {nome: "Thauvin", squadra: "Udinese", importanza: 1},
+            {nome: "Adams C.", squadra: "Torino", importanza: 1},
+            {nome: "Colombo", squadra: "Genoa", importanza: 1},
+            {nome: "Krstović", squadra: "Lecce", importanza: 1},
+            {nome: "Tete Morente", squadra: "Lecce", importanza: 2},
+            {nome: "Pinamonti", squadra: "Sassuolo", importanza: 1},
+            {nome: "Lauriente", squadra: "Sassuolo", importanza: 2},
+            {nome: "Man", squadra: "Parma", importanza: 1}
+        ];
+        
+        // Oggetto per associare ogni giocatore all'URL della sua immagine
+        const playerImages = {
+            "Lukaku - Napoli": "https://cdn.sofifa.net/players/192/505/25_120.png",
+            "Man - Parma": "https://cdn.sofifa.net/players/239/978/25_120.png",
+            "Dybala - Roma": "https://cdn.sofifa.net/players/211/110/25_120.png",
+            "Martínez L. - Inter": "https://cdn.sofifa.net/players/231/478/25_120.png",
+            "Thuram - Inter": "https://cdn.sofifa.net/players/228/093/25_120.png",
+            "Raspadori - Napoli": "https://cdn.sofifa.net/players/253/002/25_120.png",
+            "Lucca - Napoli": "https://cdn.sofifa.net/players/268/474/25_120.png",
+            "Vlahović - Juventus": "https://cdn.sofifa.net/players/246/430/25_120.png",
+            "David - Juventus": "https://cdn.sofifa.net/players/243/630/25_120.png",
+            "Kolo Muani - Juventus": "https://cdn.sofifa.net/players/237/679/25_120.png",
+            "Leão - Milan": "https://cdn.sofifa.net/players/241/721/25_120.png",
+            "Pulisic - Milan": "https://cdn.sofifa.net/players/227/796/25_120.png",
+            "Dovbyk - Roma": "https://cdn.sofifa.net/players/242/458/25_120.png",
+            "Dybala - Roma": "https://cdn.sofifa.net/players/211/110/25_120.png",
+            "Soule’ - Roma": "https://cdn.sofifa.net/players/265/695/25_120.png",
+            "Kean - Fiorentina": "https://cdn.sofifa.net/players/236/610/25_120.png",
+            "Beltrán - Fiorentina": "https://cdn.sofifa.net/players/246/258/25_120.png",
+            "Guðmundsson - Fiorentina": "https://cdn.sofifa.net/players/238/004/25_120.png",
+            "Scamacca - Atalanta": "https://cdn.sofifa.net/players/226/710/25_120.png",
+            "De Ketelaere - Atalanta": "https://cdn.sofifa.net/players/251/470/25_120.png",
+            "Castellanos - Lazio": "https://cdn.sofifa.net/players/237/712/25_120.png",
+            "Immobile - Lazio": "https://cdn.sofifa.net/players/192/387/23_120.png",
+            "Piccoli - Cagliari": "https://cdn.sofifa.net/players/248/385/25_120.png",
+            "Luvumbo - Cagliari": "https://cdn.sofifa.net/players/259/011/25_120.png",
+            "Sarr - Hellas Verona": "https://cdn.sofifa.net/players/256/453/25_120.png",
+            "Mosquera - Hellas Verona": "https://cdn.sofifa.net/players/266/585/25_120.png",
+            "Brenner - Udinese": "https://cdn.sofifa.net/players/240/332/25_120.png",
+            "Bravo - Udinese": "https://cdn.sofifa.net/players/265/194/25_120.png",
+            "Thauvin - Udinese": "https://cdn.sofifa.net/players/204/970/25_120.png",
+            "Adams C. - Torino": "https://cdn.sofifa.net/players/226/093/25_120.png",
+            "Colombo - Genoa": "https://cdn.sofifa.net/players/256/899/25_120.png",
+            "Krstović - Lecce": "https://cdn.sofifa.net/players/277/839/25_120.png",
+            "Tete Morente - Lecce": "https://cdn.sofifa.net/players/239/671/25_120.png",
+            "Pinamonti - Sassuolo": "https://cdn.sofifa.net/players/235/842/25_120.png",
+            "Lauriente - Sassuolo": "https://cdn.sofifa.net/players/243/593/25_120.png",
+            "Man - Parma": "https://cdn.sofifa.net/players/239/978/25_120.png"
+            // Aggiungi qui gli altri giocatori e i loro URL
+        };
+        
+        function mostraImmagine(selectId) {
+            const selectElement = document.getElementById(selectId);
+            const imgElement = document.getElementById(`img-${selectId}`);
+            const selectedPlayer = selectElement.value;
+
+            if (selectedPlayer && selectedPlayer in playerImages) {
+                imgElement.src = playerImages[selectedPlayer];
+                imgElement.classList.add('visible');
+            } else {
+                imgElement.classList.remove('visible');
+                imgElement.src = '';
+            }
+        }
+
+
+        const calendario = {
+            "Giornata 1": [
+                {squadra1: "Atalanta", squadra2: "Pisa"},
+                {squadra1: "Cagliari", squadra2: "Fiorentina"},
+                {squadra1: "Como", squadra2: "Lazio"},
+                {squadra1: "Genoa", squadra2: "Lecce"},
+                {squadra1: "Inter", squadra2: "Torino"},
+                {squadra1: "Juventus", squadra2: "Parma"},
+                {squadra1: "Milan", squadra2: "Cremonese"},
+                {squadra1: "Roma", squadra2: "Bologna"},
+                {squadra1: "Sassuolo", squadra2: "Napoli"},
+                {squadra1: "Udinese", squadra2: "Hellas Verona"}
+            ],
+            "Giornata 2": [
+                {squadra1: "Bologna", squadra2: "Como"},
+                {squadra1: "Cremonese", squadra2: "Sassuolo"},
+                {squadra1: "Genoa", squadra2: "Juventus"},
+                {squadra1: "Inter", squadra2: "Udinese"},
+                {squadra1: "Lazio", squadra2: "Hellas Verona"},
+                {squadra1: "Lecce", squadra2: "Milan"},
+                {squadra1: "Napoli", squadra2: "Cagliari"},
+                {squadra1: "Parma", squadra2: "Atalanta"},
+                {squadra1: "Pisa", squadra2: "Roma"},
+                {squadra1: "Torino", squadra2: "Fiorentina"}
+            ],
+            "Giornata 3": [
+                {squadra1: "Atalanta", squadra2: "Lecce"},
+                {squadra1: "Cagliari", squadra2: "Parma"},
+                {squadra1: "Como", squadra2: "Genoa"},
+                {squadra1: "Fiorentina", squadra2: "Napoli"},
+                {squadra1: "Juventus", squadra2: "Inter"},
+                {squadra1: "Milan", squadra2: "Bologna"},
+                {squadra1: "Pisa", squadra2: "Udinese"},
+                {squadra1: "Roma", squadra2: "Torino"},
+                {squadra1: "Sassuolo", squadra2: "Lazio"},
+                {squadra1: "Hellas Verona", squadra2: "Cremonese"}
+            ],
+            "Giornata 4": [
+                {squadra1: "Bologna", squadra2: "Genoa"},
+                {squadra1: "Cremonese", squadra2: "Parma"},
+                {squadra1: "Fiorentina", squadra2: "Como"},
+                {squadra1: "Inter", squadra2: "Sassuolo"},
+                {squadra1: "Lazio", squadra2: "Roma"},
+                {squadra1: "Lecce", squadra2: "Cagliari"},
+                {squadra1: "Napoli", squadra2: "Pisa"},
+                {squadra1: "Torino", squadra2: "Atalanta"},
+                {squadra1: "Udinese", squadra2: "Milan"},
+                {squadra1: "Hellas Verona", squadra2: "Juventus"}
+            ],
+            "Giornata 5": [
+                {squadra1: "Cagliari", squadra2: "Inter"},
+                {squadra1: "Como", squadra2: "Cremonese"},
+                {squadra1: "Genoa", squadra2: "Lazio"},
+                {squadra1: "Juventus", squadra2: "Atalanta"},
+                {squadra1: "Lecce", squadra2: "Bologna"},
+                {squadra1: "Milan", squadra2: "Napoli"},
+                {squadra1: "Parma", squadra2: "Torino"},
+                {squadra1: "Pisa", squadra2: "Fiorentina"},
+                {squadra1: "Roma", squadra2: "Hellas Verona"},
+                {squadra1: "Sassuolo", squadra2: "Udinese"}
+            ],
+            "Giornata 6": [
+                {squadra1: "Atalanta", squadra2: "Como"},
+                {squadra1: "Bologna", squadra2: "Pisa"},
+                {squadra1: "Fiorentina", squadra2: "Roma"},
+                {squadra1: "Inter", squadra2: "Cremonese"},
+                {squadra1: "Juventus", squadra2: "Milan"},
+                {squadra1: "Lazio", squadra2: "Torino"},
+                {squadra1: "Napoli", squadra2: "Genoa"},
+                {squadra1: "Parma", squadra2: "Lecce"},
+                {squadra1: "Udinese", squadra2: "Cagliari"},
+                {squadra1: "Hellas Verona", squadra2: "Sassuolo"}
+            ],
+            "Giornata 7": [
+                {squadra1: "Atalanta", squadra2: "Lazio"},
+                {squadra1: "Cagliari", squadra2: "Bologna"},
+                {squadra1: "Como", squadra2: "Juventus"},
+                {squadra1: "Cremonese", squadra2: "Udinese"},
+                {squadra1: "Genoa", squadra2: "Parma"},
+                {squadra1: "Lecce", squadra2: "Sassuolo"},
+                {squadra1: "Milan", squadra2: "Fiorentina"},
+                {squadra1: "Pisa", squadra2: "Hellas Verona"},
+                {squadra1: "Roma", squadra2: "Inter"},
+                {squadra1: "Torino", squadra2: "Napoli"}
+            ],
+            "Giornata 8": [
+                {squadra1: "Cremonese", squadra2: "Atalanta"},
+                {squadra1: "Fiorentina", squadra2: "Bologna"},
+                {squadra1: "Lazio", squadra2: "Juventus"},
+                {squadra1: "Milan", squadra2: "Pisa"},
+                {squadra1: "Napoli", squadra2: "Inter"},
+                {squadra1: "Parma", squadra2: "Como"},
+                {squadra1: "Sassuolo", squadra2: "Roma"},
+                {squadra1: "Torino", squadra2: "Genoa"},
+                {squadra1: "Udinese", squadra2: "Lecce"},
+                {squadra1: "Hellas Verona", squadra2: "Cagliari"}
+            ],
+            "Giornata 9": [
+                {squadra1: "Atalanta", squadra2: "Milan"},
+                {squadra1: "Bologna", squadra2: "Torino"},
+                {squadra1: "Cagliari", squadra2: "Sassuolo"},
+                {squadra1: "Como", squadra2: "Hellas Verona"},
+                {squadra1: "Genoa", squadra2: "Cremonese"},
+                {squadra1: "Inter", squadra2: "Fiorentina"},
+                {squadra1: "Juventus", squadra2: "Udinese"},
+                {squadra1: "Lecce", squadra2: "Napoli"},
+                {squadra1: "Pisa", squadra2: "Lazio"},
+                {squadra1: "Roma", squadra2: "Parma"}
+            ],
+            "Giornata 10": [
+                {squadra1: "Cremonese", squadra2: "Juventus"},
+                {squadra1: "Fiorentina", squadra2: "Lecce"},
+                {squadra1: "Lazio", squadra2: "Cagliari"},
+                {squadra1: "Milan", squadra2: "Roma"},
+                {squadra1: "Napoli", squadra2: "Como"},
+                {squadra1: "Parma", squadra2: "Bologna"},
+                {squadra1: "Sassuolo", squadra2: "Genoa"},
+                {squadra1: "Torino", squadra2: "Pisa"},
+                {squadra1: "Udinese", squadra2: "Atalanta"},
+                {squadra1: "Hellas Verona", squadra2: "Inter"}
+            ],
+            "Giornata 11": [
+                {squadra1: "Atalanta", squadra2: "Sassuolo"},
+                {squadra1: "Bologna", squadra2: "Napoli"},
+                {squadra1: "Como", squadra2: "Cagliari"},
+                {squadra1: "Genoa", squadra2: "Fiorentina"},
+                {squadra1: "Inter", squadra2: "Lazio"},
+                {squadra1: "Juventus", squadra2: "Torino"},
+                {squadra1: "Lecce", squadra2: "Hellas Verona"},
+                {squadra1: "Parma", squadra2: "Milan"},
+                {squadra1: "Pisa", squadra2: "Cremonese"},
+                {squadra1: "Roma", squadra2: "Udinese"}
+            ],
+            "Giornata 12": [
+                {squadra1: "Cagliari", squadra2: "Genoa"},
+                {squadra1: "Cremonese", squadra2: "Roma"},
+                {squadra1: "Fiorentina", squadra2: "Juventus"},
+                {squadra1: "Inter", squadra2: "Milan"},
+                {squadra1: "Lazio", squadra2: "Lecce"},
+                {squadra1: "Napoli", squadra2: "Atalanta"},
+                {squadra1: "Sassuolo", squadra2: "Pisa"},
+                {squadra1: "Torino", squadra2: "Como"},
+                {squadra1: "Udinese", squadra2: "Bologna"},
+                {squadra1: "Hellas Verona", squadra2: "Parma"}
+            ],
+            "Giornata 13": [
+                {squadra1: "Atalanta", squadra2: "Fiorentina"},
+                {squadra1: "Bologna", squadra2: "Cremonese"},
+                {squadra1: "Como", squadra2: "Sassuolo"},
+                {squadra1: "Genoa", squadra2: "Hellas Verona"},
+                {squadra1: "Juventus", squadra2: "Cagliari"},
+                {squadra1: "Lecce", squadra2: "Torino"},
+                {squadra1: "Milan", squadra2: "Lazio"},
+                {squadra1: "Parma", squadra2: "Udinese"},
+                {squadra1: "Pisa", squadra2: "Inter"},
+                {squadra1: "Roma", squadra2: "Napoli"}
+            ],
+            "Giornata 14": [
+                {squadra1: "Cagliari", squadra2: "Roma"},
+                {squadra1: "Cremonese", squadra2: "Lecce"},
+                {squadra1: "Inter", squadra2: "Como"},
+                {squadra1: "Lazio", squadra2: "Bologna"},
+                {squadra1: "Napoli", squadra2: "Juventus"},
+                {squadra1: "Pisa", squadra2: "Parma"},
+                {squadra1: "Sassuolo", squadra2: "Fiorentina"},
+                {squadra1: "Torino", squadra2: "Milan"},
+                {squadra1: "Udinese", squadra2: "Genoa"},
+                {squadra1: "Hellas Verona", squadra2: "Atalanta"}
+            ],
+            "Giornata 15": [
+                {squadra1: "Atalanta", squadra2: "Cagliari"},
+                {squadra1: "Bologna", squadra2: "Juventus"},
+                {squadra1: "Fiorentina", squadra2: "Hellas Verona"},
+                {squadra1: "Genoa", squadra2: "Inter"},
+                {squadra1: "Lecce", squadra2: "Pisa"},
+                {squadra1: "Milan", squadra2: "Sassuolo"},
+                {squadra1: "Parma", squadra2: "Lazio"},
+                {squadra1: "Roma", squadra2: "Como"},
+                {squadra1: "Torino", squadra2: "Cremonese"},
+                {squadra1: "Udinese", squadra2: "Napoli"}
+            ],
+            "Giornata 16": [
+                {squadra1: "Cagliari", squadra2: "Pisa"},
+                {squadra1: "Como", squadra2: "Milan"},
+                {squadra1: "Fiorentina", squadra2: "Udinese"},
+                {squadra1: "Genoa", squadra2: "Atalanta"},
+                {squadra1: "Inter", squadra2: "Lecce"},
+                {squadra1: "Juventus", squadra2: "Roma"},
+                {squadra1: "Lazio", squadra2: "Cremonese"},
+                {squadra1: "Napoli", squadra2: "Parma"},
+                {squadra1: "Sassuolo", squadra2: "Torino"},
+                {squadra1: "Hellas Verona", squadra2: "Bologna"}
+            ],
+            "Giornata 17": [
+                {squadra1: "Atalanta", squadra2: "Inter"},
+                {squadra1: "Bologna", squadra2: "Sassuolo"},
+                {squadra1: "Cremonese", squadra2: "Napoli"},
+                {squadra1: "Lecce", squadra2: "Como"},
+                {squadra1: "Milan", squadra2: "Hellas Verona"},
+                {squadra1: "Parma", squadra2: "Fiorentina"},
+                {squadra1: "Pisa", squadra2: "Juventus"},
+                {squadra1: "Roma", squadra2: "Genoa"},
+                {squadra1: "Torino", squadra2: "Cagliari"},
+                {squadra1: "Udinese", squadra2: "Lazio"}
+            ],
+            "Giornata 18": [
+                {squadra1: "Atalanta", squadra2: "Roma"},
+                {squadra1: "Cagliari", squadra2: "Milan"},
+                {squadra1: "Como", squadra2: "Udinese"},
+                {squadra1: "Fiorentina", squadra2: "Cremonese"},
+                {squadra1: "Genoa", squadra2: "Pisa"},
+                {squadra1: "Inter", squadra2: "Bologna"},
+                {squadra1: "Juventus", squadra2: "Lecce"},
+                {squadra1: "Lazio", squadra2: "Napoli"},
+                {squadra1: "Sassuolo", squadra2: "Roma"},
+                {squadra1: "Hellas Verona", squadra2: "Torino"}
+            ],
+            "Giornata 19": [
+                {squadra1: "Bologna", squadra2: "Atalanta"},
+                {squadra1: "Cremonese", squadra2: "Cagliari"},
+                {squadra1: "Lazio", squadra2: "Fiorentina"},
+                {squadra1: "Lecce", squadra2: "Roma"},
+                {squadra1: "Milan", squadra2: "Genoa"},
+                {squadra1: "Napoli", squadra2: "Hellas Verona"},
+                {squadra1: "Parma", squadra2: "Inter"},
+                {squadra1: "Pisa", squadra2: "Como"},
+                {squadra1: "Sassuolo", squadra2: "Juventus"},
+                {squadra1: "Torino", squadra2: "Udinese"}
+            ],
+            "Giornata 20": [
+                {squadra1: "Atalanta", squadra2: "Torino"},
+                {squadra1: "Como", squadra2: "Bologna"},
+                {squadra1: "Fiorentina", squadra2: "Milan"},
+                {squadra1: "Genoa", squadra2: "Cagliari"},
+                {squadra1: "Inter", squadra2: "Napoli"},
+                {squadra1: "Juventus", squadra2: "Cremonese"},
+                {squadra1: "Lecce", squadra2: "Parma"},
+                {squadra1: "Roma", squadra2: "Sassuolo"},
+                {squadra1: "Udinese", squadra2: "Pisa"},
+                {squadra1: "Hellas Verona", squadra2: "Lazio"}
+            ],
+            "Giornata 21": [
+                {squadra1: "Bologna", squadra2: "Fiorentina"},
+                {squadra1: "Cagliari", squadra2: "Juventus"},
+                {squadra1: "Cremonese", squadra2: "Hellas Verona"},
+                {squadra1: "Lazio", squadra2: "Como"},
+                {squadra1: "Milan", squadra2: "Lecce"},
+                {squadra1: "Napoli", squadra2: "Sassuolo"},
+                {squadra1: "Parma", squadra2: "Genoa"},
+                {squadra1: "Pisa", squadra2: "Atalanta"},
+                {squadra1: "Torino", squadra2: "Roma"},
+                {squadra1: "Udinese", squadra2: "Inter"}
+            ],
+            "Giornata 22": [
+                {squadra1: "Atalanta", squadra2: "Parma"},
+                {squadra1: "Como", squadra2: "Torino"},
+                {squadra1: "Fiorentina", squadra2: "Cagliari"},
+                {squadra1: "Genoa", squadra2: "Bologna"},
+                {squadra1: "Inter", squadra2: "Pisa"},
+                {squadra1: "Juventus", squadra2: "Napoli"},
+                {squadra1: "Lecce", squadra2: "Lazio"},
+                {squadra1: "Roma", squadra2: "Milan"},
+                {squadra1: "Sassuolo", squadra2: "Cremonese"},
+                {squadra1: "Hellas Verona", squadra2: "Udinese"}
+            ],
+            "Giornata 23": [
+                {squadra1: "Bologna", squadra2: "Milan"},
+                {squadra1: "Cagliari", squadra2: "Hellas Verona"},
+                {squadra1: "Como", squadra2: "Atalanta"},
+                {squadra1: "Cremonese", squadra2: "Inter"},
+                {squadra1: "Lazio", squadra2: "Genoa"},
+                {squadra1: "Napoli", squadra2: "Fiorentina"},
+                {squadra1: "Parma", squadra2: "Juventus"},
+                {squadra1: "Pisa", squadra2: "Sassuolo"},
+                {squadra1: "Torino", squadra2: "Lecce"},
+                {squadra1: "Udinese", squadra2: "Roma"}
+            ],
+            "Giornata 24": [
+                {squadra1: "Atalanta", squadra2: "Cremonese"},
+                {squadra1: "Bologna", squadra2: "Parma"},
+                {squadra1: "Fiorentina", squadra2: "Torino"},
+                {squadra1: "Genoa", squadra2: "Napoli"},
+                {squadra1: "Juventus", squadra2: "Lazio"},
+                {squadra1: "Lecce", squadra2: "Udinese"},
+                {squadra1: "Milan", squadra2: "Como"},
+                {squadra1: "Roma", squadra2: "Cagliari"},
+                {squadra1: "Sassuolo", squadra2: "Inter"},
+                {squadra1: "Hellas Verona", squadra2: "Pisa"}
+            ],
+            "Giornata 25": [
+                {squadra1: "Cagliari", squadra2: "Lecce"},
+                {squadra1: "Como", squadra2: "Fiorentina"},
+                {squadra1: "Cremonese", squadra2: "Genoa"},
+                {squadra1: "Inter", squadra2: "Juventus"},
+                {squadra1: "Lazio", squadra2: "Atalanta"},
+                {squadra1: "Napoli", squadra2: "Roma"},
+                {squadra1: "Parma", squadra2: "Hellas Verona"},
+                {squadra1: "Pisa", squadra2: "Milan"},
+                {squadra1: "Torino", squadra2: "Bologna"},
+                {squadra1: "Udinese", squadra2: "Sassuolo"}
+            ],
+            "Giornata 26": [
+                {squadra1: "Atalanta", squadra2: "Napoli"},
+                {squadra1: "Bologna", squadra2: "Udinese"},
+                {squadra1: "Cagliari", squadra2: "Lazio"},
+                {squadra1: "Fiorentina", squadra2: "Pisa"},
+                {squadra1: "Genoa", squadra2: "Torino"},
+                {squadra1: "Juventus", squadra2: "Como"},
+                {squadra1: "Lecce", squadra2: "Inter"},
+                {squadra1: "Milan", squadra2: "Parma"},
+                {squadra1: "Roma", squadra2: "Cremonese"},
+                {squadra1: "Sassuolo", squadra2: "Hellas Verona"}
+            ],
+            "Giornata 27": [
+                {squadra1: "Como", squadra2: "Lecce"},
+                {squadra1: "Cremonese", squadra2: "Milan"},
+                {squadra1: "Inter", squadra2: "Genoa"},
+                {squadra1: "Parma", squadra2: "Cagliari"},
+                {squadra1: "Pisa", squadra2: "Bologna"},
+                {squadra1: "Roma", squadra2: "Juventus"},
+                {squadra1: "Sassuolo", squadra2: "Atalanta"},
+                {squadra1: "Torino", squadra2: "Lazio"},
+                {squadra1: "Udinese", squadra2: "Fiorentina"},
+                {squadra1: "Hellas Verona", squadra2: "Napoli"}
+            ],
+            "Giornata 28": [
+                {squadra1: "Atalanta", squadra2: "Udinese"},
+                {squadra1: "Bologna", squadra2: "Hellas Verona"},
+                {squadra1: "Cagliari", squadra2: "Como"},
+                {squadra1: "Fiorentina", squadra2: "Parma"},
+                {squadra1: "Genoa", squadra2: "Roma"},
+                {squadra1: "Juventus", squadra2: "Pisa"},
+                {squadra1: "Lazio", squadra2: "Sassuolo"},
+                {squadra1: "Lecce", squadra2: "Cremonese"},
+                {squadra1: "Milan", squadra2: "Inter"},
+                {squadra1: "Napoli", squadra2: "Torino"}
+            ],
+            "Giornata 29": [
+                {squadra1: "Como", squadra2: "Roma"},
+                {squadra1: "Cremonese", squadra2: "Fiorentina"},
+                {squadra1: "Inter", squadra2: "Atalanta"},
+                {squadra1: "Lazio", squadra2: "Milan"},
+                {squadra1: "Napoli", squadra2: "Lecce"},
+                {squadra1: "Pisa", squadra2: "Cagliari"},
+                {squadra1: "Sassuolo", squadra2: "Bologna"},
+                {squadra1: "Torino", squadra2: "Parma"},
+                {squadra1: "Udinese", squadra2: "Juventus"},
+                {squadra1: "Hellas Verona", squadra2: "Genoa"}
+            ],
+            "Giornata 30": [
+                {squadra1: "Atalanta", squadra2: "Hellas Verona"},
+                {squadra1: "Bologna", squadra2: "Lazio"},
+                {squadra1: "Cagliari", squadra2: "Napoli"},
+                {squadra1: "Como", squadra2: "Pisa"},
+                {squadra1: "Fiorentina", squadra2: "Inter"},
+                {squadra1: "Genoa", squadra2: "Udinese"},
+                {squadra1: "Juventus", squadra2: "Sassuolo"},
+                {squadra1: "Milan", squadra2: "Torino"},
+                {squadra1: "Parma", squadra2: "Cremonese"},
+                {squadra1: "Roma", squadra2: "Lecce"}
+            ],
+            "Giornata 31": [
+                {squadra1: "Cremonese", squadra2: "Bologna"},
+                {squadra1: "Inter", squadra2: "Roma"},
+                {squadra1: "Juventus", squadra2: "Genoa"},
+                {squadra1: "Lazio", squadra2: "Parma"},
+                {squadra1: "Lecce", squadra2: "Atalanta"},
+                {squadra1: "Napoli", squadra2: "Milan"},
+                {squadra1: "Pisa", squadra2: "Torino"},
+                {squadra1: "Sassuolo", squadra2: "Cagliari"},
+                {squadra1: "Udinese", squadra2: "Como"},
+                {squadra1: "Hellas Verona", squadra2: "Fiorentina"}
+            ],
+            "Giornata 32": [
+                {squadra1: "Atalanta", squadra2: "Juventus"},
+                {squadra1: "Bologna", squadra2: "Lecce"},
+                {squadra1: "Cagliari", squadra2: "Cremonese"},
+                {squadra1: "Como", squadra2: "Inter"},
+                {squadra1: "Fiorentina", squadra2: "Lazio"},
+                {squadra1: "Genoa", squadra2: "Sassuolo"},
+                {squadra1: "Milan", squadra2: "Udinese"},
+                {squadra1: "Parma", squadra2: "Napoli"},
+                {squadra1: "Roma", squadra2: "Pisa"},
+                {squadra1: "Torino", squadra2: "Hellas Verona"}
+            ],
+            "Giornata 33": [
+                {squadra1: "Cremonese", squadra2: "Torino"},
+                {squadra1: "Inter", squadra2: "Cagliari"},
+                {squadra1: "Juventus", squadra2: "Bologna"},
+                {squadra1: "Lecce", squadra2: "Fiorentina"},
+                {squadra1: "Napoli", squadra2: "Lazio"},
+                {squadra1: "Pisa", squadra2: "Genoa"},
+                {squadra1: "Roma", squadra2: "Atalanta"},
+                {squadra1: "Sassuolo", squadra2: "Como"},
+                {squadra1: "Udinese", squadra2: "Parma"},
+                {squadra1: "Hellas Verona", squadra2: "Milan"}
+            ],
+            "Giornata 34": [
+                {squadra1: "Bologna", squadra2: "Roma"},
+                {squadra1: "Cagliari", squadra2: "Atalanta"},
+                {squadra1: "Fiorentina", squadra2: "Sassuolo"},
+                {squadra1: "Genoa", squadra2: "Como"},
+                {squadra1: "Lazio", squadra2: "Udinese"},
+                {squadra1: "Milan", squadra2: "Juventus"},
+                {squadra1: "Napoli", squadra2: "Cremonese"},
+                {squadra1: "Parma", squadra2: "Pisa"},
+                {squadra1: "Torino", squadra2: "Inter"},
+                {squadra1: "Hellas Verona", squadra2: "Lecce"}
+            ],
+            "Giornata 35": [
+                {squadra1: "Atalanta", squadra2: "Genoa"},
+                {squadra1: "Bologna", squadra2: "Cagliari"},
+                {squadra1: "Como", squadra2: "Napoli"},
+                {squadra1: "Cremonese", squadra2: "Lazio"},
+                {squadra1: "Inter", squadra2: "Parma"},
+                {squadra1: "Juventus", squadra2: "Hellas Verona"},
+                {squadra1: "Pisa", squadra2: "Lecce"},
+                {squadra1: "Roma", squadra2: "Fiorentina"},
+                {squadra1: "Sassuolo", squadra2: "Milan"},
+                {squadra1: "Udinese", squadra2: "Torino"}
+            ],
+            "Giornata 36": [
+                {squadra1: "Cagliari", squadra2: "Udinese"},
+                {squadra1: "Cremonese", squadra2: "Pisa"},
+                {squadra1: "Fiorentina", squadra2: "Genoa"},
+                {squadra1: "Lazio", squadra2: "Inter"},
+                {squadra1: "Lecce", squadra2: "Juventus"},
+                {squadra1: "Milan", squadra2: "Atalanta"},
+                {squadra1: "Napoli", squadra2: "Bologna"},
+                {squadra1: "Parma", squadra2: "Roma"},
+                {squadra1: "Torino", squadra2: "Sassuolo"},
+                {squadra1: "Hellas Verona", squadra2: "Como"}
+            ],
+            "Giornata 37": [
+                {squadra1: "Atalanta", squadra2: "Bologna"},
+                {squadra1: "Cagliari", squadra2: "Torino"},
+                {squadra1: "Como", squadra2: "Parma"},
+                {squadra1: "Genoa", squadra2: "Milan"},
+                {squadra1: "Inter", squadra2: "Hellas Verona"},
+                {squadra1: "Juventus", squadra2: "Fiorentina"},
+                {squadra1: "Pisa", squadra2: "Napoli"},
+                {squadra1: "Roma", squadra2: "Lazio"},
+                {squadra1: "Sassuolo", squadra2: "Lecce"},
+                {squadra1: "Udinese", squadra2: "Cremonese"}
+            ],
+            "Giornata 38": [
+                {squadra1: "Bologna", squadra2: "Inter"},
+                {squadra1: "Cremonese", squadra2: "Como"},
+                {squadra1: "Fiorentina", squadra2: "Atalanta"},
+                {squadra1: "Lazio", squadra2: "Pisa"},
+                {squadra1: "Lecce", squadra2: "Genoa"},
+                {squadra1: "Milan", squadra2: "Cagliari"},
+                {squadra1: "Napoli", squadra2: "Udinese"},
+                {squadra1: "Parma", squadra2: "Sassuolo"},
+                {squadra1: "Torino", squadra2: "Juventus"},
+                {squadra1: "Hellas Verona", squadra2: "Roma"}
+            ]
+        };
+        
+        function trovaAvversario(squadra, giornata) {
+            for (let match of calendario[giornata]) {
+                if (match.squadra1 === squadra) {
+                    return match.squadra2;
+                } else if (match.squadra2 === squadra) {
+                    return match.squadra1;
+                }
+            }
+            return "Non trovato";
+        }
+
+        function calcolaDifficoltaAvversario(avversario) {
+            if (difficoltaSquadre.difficile.includes(avversario)) {
+                return "difficile";
+            } else if (difficoltaSquadre.media.includes(avversario)) {
+                return "media";
+            } else if (difficoltaSquadre.facile.includes(avversario)) {
+                return "facile";
+            }
+            return "sconosciuta";
+        }
+        
+        // Funzione per inizializzare i menu a tendina degli attaccanti
+        function inizializzaSelectAttaccanti() {
+            const selectAtt1 = document.getElementById('attaccante1');
+            const selectAtt2 = document.getElementById('attaccante2');
+            const selectAtt3 = document.getElementById('attaccante3');
+
+            // Svuota i menu a tendina tranne l'opzione "Seleziona un giocatore"
+            const selects = [selectAtt1, selectAtt2, selectAtt3];
+            selects.forEach(select => {
+                select.innerHTML = '<option value="" selected disabled>Seleziona un giocatore</option>';
+            });
+            
+            // Ordina la lista degli attaccanti alfabeticamente per nome
+            listaAttaccanti.sort((a, b) => a.nome.localeCompare(b.nome));
+
+            // Aggiunge le opzioni ai menu a tendina
+            for (let attaccante of listaAttaccanti) {
+                const optionText = `${attaccante.nome} - ${attaccante.squadra}`;
+                const optionValue = `${attaccante.nome} - ${attaccante.squadra}`;
+                
+                const option1 = new Option(optionText, optionValue);
+                const option2 = new Option(optionText, optionValue);
+                const option3 = new Option(optionText, optionValue);
+
+                selectAtt1.add(option1);
+                selectAtt2.add(option2);
+                selectAtt3.add(option3);
+            }
+        }
+        
+        // Chiama la funzione per inizializzare i menu a tendina al caricamento della pagina
+        document.addEventListener('DOMContentLoaded', inizializzaSelectAttaccanti);
+
+        function analizzaCalendario() {
+            const attaccante1 = document.getElementById('attaccante1').value;
+            const attaccante2 = document.getElementById('attaccante2').value;
+            const attaccante3 = document.getElementById('attaccante3').value;
+
+            // Evita di analizzare se non sono stati selezionati tutti i giocatori
+            if (!attaccante1 || !attaccante2 || !attaccante3) {
+                alert("Per favore, seleziona tutti e tre i giocatori.");
+                return;
+            }
+            
+            const tridente = [
+                { nome: attaccante1.split(' - ')[0], squadra: attaccante1.split(' - ')[1] },
+                { nome: attaccante2.split(' - ')[0], squadra: attaccante2.split(' - ')[1] },
+                { nome: attaccante3.split(' - ')[0], squadra: attaccante3.split(' - ')[1] }
+            ];
+
+            const risultati = calcolaAffidabilitaTridente(tridente);
+            mostraRisultati(risultati);
+        }
+
+        function calcolaAffidabilitaTridente(tridente) {
+            const giornate = Object.keys(calendario);
+            const risultati = {
+                partite: {},
+                punteggioTotale: 0,
+                percentuale: 0
+            };
+            
+            const punteggioBase = {
+                "difficile": 0,
+                "media": 1,
+                "facile": 3,
+                "sconosciuta": 0
+            };
+            
+            for (let giornata of giornate) {
+                risultati.partite[giornata] = [];
+                let punteggioGiornataMax = 0;
+                
+                for (let attaccante of tridente) {
+                    const avversario = trovaAvversario(attaccante.squadra, giornata);
+                    const difficolta = calcolaDifficoltaAvversario(avversario);
+                    const punteggioPartita = punteggioBase[difficolta];
+
+                    risultati.partite[giornata].push({
+                        attaccante: attaccante.nome,
+                        squadra: attaccante.squadra,
+                        avversario: avversario,
+                        difficolta: difficolta,
+                        punteggio: punteggioPartita
+                    });
+                    
+                    punteggioGiornataMax = Math.max(punteggioGiornataMax, punteggioPartita);
+                }
+                risultati.punteggioTotale += punteggioGiornataMax;
+            }
+
+            // Calcolo della percentuale secondo la nuova logica: somma totale dei punteggi massimi diviso 114
+            risultati.percentuale = Math.round((risultati.punteggioTotale / 114) * 100);
+
+            return risultati;
+        }
+
+        function mostraRisultati(risultati) {
+            const divRisultati = document.getElementById('risultati');
+            const progressBar = divRisultati.querySelector('.progress-bar');
+            const progressBarText = divRisultati.querySelector('.progress-bar-text');
+
+            progressBar.style.width = `${Math.max(0, risultati.percentuale)}%`;
+            progressBarText.innerText = `${risultati.percentuale}%`;
+
+            if (risultati.percentuale >= 70) {
+                progressBar.className = 'progress-bar high-reliability';
+            } else if (risultati.percentuale >= 40) {
+                progressBar.className = 'progress-bar medium-reliability';
+            } else {
+                progressBar.className = 'progress-bar low-reliability';
+            }
+
+            const dettaglioGiornate = document.getElementById('dettaglio-giornate');
+            dettaglioGiornate.innerHTML = '';
+            
+            for (const giornata in risultati.partite) {
+                const giornataDiv = document.createElement('div');
+                giornataDiv.className = 'risultato-giornata';
+                
+                // Calcola il punteggio massimo per la giornata per la visualizzazione
+                let punteggiGiornata = risultati.partite[giornata].map(p => p.punteggio);
+                let punteggioMaxGiornata = Math.max(...punteggiGiornata);
+                
+                giornataDiv.innerHTML = `<strong>${giornata} (Punteggio: ${punteggioMaxGiornata})</strong>`;
+                
+                let partitaHTML = '';
+                for (const partita of risultati.partite[giornata]) {
+                    const difficoltaClass = partita.difficolta;
+                    partitaHTML += `<br>${partita.attaccante} (${partita.squadra}) vs <span class="${difficoltaClass}">${partita.avversario}</span>`;
+                }
+                giornataDiv.innerHTML += partitaHTML;
+                dettaglioGiornate.appendChild(giornataDiv);
+            }
+            divRisultati.style.opacity = '0';
+            divRisultati.style.display = 'block';
+            setTimeout(() => {
+                divRisultati.style.opacity = '1';
+            }, 10);
+        }
+
+        function mostraDettaglioGiornate(opzione) {
+            const dettaglioGiornate = document.getElementById('dettaglio-giornate');
+            
+            const attaccante1 = document.getElementById('attaccante1').value;
+            const attaccante2 = document.getElementById('attaccante2').value;
+            const attaccante3 = document.getElementById('attaccante3').value;
+
+            if (!attaccante1 || !attaccante2 || !attaccante3) {
+                alert("Per favore, seleziona tutti e tre i giocatori.");
+                return;
+            }
+            
+            const tridente = [
+                { nome: attaccante1.split(' - ')[0], squadra: attaccante1.split(' - ')[1] },
+                { nome: attaccante2.split(' - ')[0], squadra: attaccante2.split(' - ')[1] },
+                { nome: attaccante3.split(' - ')[0], squadra: attaccante3.split(' - ')[1] }
+            ];
+
+            const risultati = calcolaAffidabilitaTridente(tridente);
+
+            dettaglioGiornate.innerHTML = '';
+            
+            for (const giornata in risultati.partite) {
+                let mostraGiornata = false;
+                if (opzione === 'dettaglio_completo') {
+                    mostraGiornata = true;
+                } else if (opzione === 'solo_difficili_e_media') {
+                    const tutteDifficiliEMedie = risultati.partite[giornata].every(p => p.difficolta !== 'facile');
+                    if (tutteDifficiliEMedie) {
+                        mostraGiornata = true;
+                    }
+                }
+                
+                if (mostraGiornata) {
+                    const giornataDiv = document.createElement('div');
+                    giornataDiv.className = 'risultato-giornata';
+                    
+                    let punteggiGiornata = risultati.partite[giornata].map(p => p.punteggio);
+                    let punteggioMaxGiornata = Math.max(...punteggiGiornata);
+
+                    giornataDiv.innerHTML = `<strong>${giornata} (Punteggio: ${punteggioMaxGiornata})</strong>`;
+                    
+                    let partitaHTML = '';
+                    for (const partita of risultati.partite[giornata]) {
+                        const difficoltaClass = partita.difficolta;
+                        partitaHTML += `<br>${partita.attaccante} (${partita.squadra}) vs <span class="${difficoltaClass}">${partita.avversario}</span>`;
+                    }
+                    giornataDiv.innerHTML += partitaHTML;
+                    dettaglioGiornate.appendChild(giornataDiv);
+                }
+            }
+            dettaglioGiornate.style.opacity = '0';
+            dettaglioGiornate.style.display = 'block';
+            setTimeout(() => {
+                dettaglioGiornate.style.opacity = '1';
+            }, 10);
+        }
+
+        function generaTopTridenti() {
+            const topTridentiList = document.getElementById('top-tridenti-list');
+            topTridentiList.innerHTML = '';
+            const tridentiGenerati = [];
+
+            // Genera una lista di attaccanti filtrata per importanza 1 e 2
+            const attaccantiFiltrati = listaAttaccanti.filter(a => a.importanza <= 2);
+            const numeroAttaccanti = attaccantiFiltrati.length;
+
+            if (numeroAttaccanti < 3) {
+                topTridentiList.innerHTML = `<p>Non ci sono abbastanza attaccanti di importanza 1 o 2 per generare tridenti.</p>`;
+                return;
+            }
+
+            // Genera combinazioni di 3 attaccanti unici
+            for (let i = 0; i < numeroAttaccanti; i++) {
+                for (let j = i + 1; j < numeroAttaccanti; j++) {
+                    for (let k = j + 1; k < numeroAttaccanti; k++) {
+                        const tridente = [attaccantiFiltrati[i], attaccantiFiltrati[j], attaccantiFiltrati[k]];
+                        const squadreUniche = new Set(tridente.map(p => p.squadra));
+                        
+                        // Assicura che le squadre siano diverse
+                        if (squadreUniche.size === 3) {
+                            tridentiGenerati.push(tridente);
+                        }
+                    }
+                }
+            }
+
+            const risultatiTridenti = tridentiGenerati.map(tridente => {
+                const risultati = calcolaAffidabilitaTridente(tridente);
+                return {
+                    tridente: tridente,
+                    percentuale: risultati.percentuale,
+                    punteggio: risultati.punteggioTotale,
+                    dettaglio: risultati.partite
+                };
+            });
+
+            // Ordina i tridenti dal più affidabile al meno affidabile
+            risultatiTridenti.sort((a, b) => b.punteggio - a.punteggio);
+
+            // Mostra i primi 10 tridenti
+            risultatiTridenti.slice(0, 10).forEach(risultato => {
+                const tridenteItem = document.createElement('div');
+                tridenteItem.className = 'tridente-item';
+
+                let classeAffidabilita = 'low-reliability';
+                if (risultato.percentuale >= 70) {
+                    classeAffidabilita = 'high-reliability';
+                } else if (risultato.percentuale >= 40) {
+                    classeAffidabilita = 'medium-reliability';
+                }
+
+                tridenteItem.innerHTML = `
+                    <div class="tridente-info">
+                        <strong>${risultato.tridente.map(p => p.nome).join(', ')}</strong>
+                        <span class="affidabilita-percentuale ${classeAffidabilita}">${risultato.percentuale}%</span>
+                    </div>
+                    <select class="tridente-select" onchange="mostraDettaglioGiornateTridente(this.value, '${encodeURIComponent(JSON.stringify(risultato.dettaglio))}')">
+                        <option value="nascondi" selected>Seleziona per vedere il calendario</option>
+                        <option value="solo_difficili_e_media">Mostra solo difficili e medie</option>
+                        <option value="dettaglio_completo">Mostra dettaglio completo</option>
+                    </select>
+                `;
+                topTridentiList.appendChild(tridenteItem);
+            });
+        }
+        
+        function mostraDettaglioGiornateTridente(opzione, dettaglioTridenteEncoded) {
+            const dettaglioTridente = JSON.parse(decodeURIComponent(dettaglioTridenteEncoded));
+            const divRisultatiTridente = document.getElementById('risultati-tridente');
+            
+            // Rimuovi eventuali div di dettaglio precedenti
+            const vecchioDettaglio = divRisultatiTridente.querySelector('#dettaglio-giornate-tridente');
+            if (vecchioDettaglio) {
+                divRisultatiTridente.removeChild(vecchioDettaglio);
+            }
+            
+            if (opzione === 'nascondi') {
+                return;
+            }
+
+            const dettaglioGiornate = document.createElement('div');
+            dettaglioGiornate.id = 'dettaglio-giornate-tridente';
+            
+            for (const giornata in dettaglioTridente) {
+                let mostraGiornata = false;
+                if (opzione === 'dettaglio_completo') {
+                    mostraGiornata = true;
+                } else if (opzione === 'solo_difficili_e_media') {
+                    const tutteDifficiliEMedie = dettaglioTridente[giornata].every(p => p.difficolta !== 'facile');
+                    if (tutteDifficiliEMedie) {
+                        mostraGiornata = true;
+                    }
+                }
+                
+                if (mostraGiornata) {
+                    const giornataDiv = document.createElement('div');
+                    giornataDiv.className = 'risultato-giornata';
+                    
+                    let punteggiGiornata = dettaglioTridente[giornata].map(p => p.punteggio);
+                    let punteggioMaxGiornata = Math.max(...punteggiGiornata);
+
+                    giornataDiv.innerHTML = `<strong>${giornata} (Punteggio: ${punteggioMaxGiornata})</strong>`;
+                    
+                    let partitaHTML = '';
+                    for (const partita of dettaglioTridente[giornata]) {
+                        const difficoltaClass = partita.difficolta;
+                        partitaHTML += `<br>${partita.attaccante} (${partita.squadra}) vs <span class="${difficoltaClass}">${partita.avversario}</span>`;
+                    }
+                    giornataDiv.innerHTML += partitaHTML;
+                    dettaglioGiornate.appendChild(giornataDiv);
+                }
+            }
+            divRisultatiTridente.appendChild(dettaglioGiornate);
+        }
+
+        // Chiamata alla funzione per generare i top tridenti all'apertura della pagina
+        document.addEventListener('DOMContentLoaded', generaTopTridenti);
+
+    </script>
+</body>
+</html>
